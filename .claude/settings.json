@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "rules": {
+    "autoLoad": [
+      "code-style",
+      "testing",
+      "security",
+      "cli-usage",
+      "file-organization"
+    ]
+  },
+  "agents": {
+    "code-reviewer": { "enabled": true },
+    "debugger": { "enabled": true }
+  },
+  "hooks": {
+    "beforeEdit": [],
+    "afterEdit": []
+  },
+  "permissions": {
+    "allow": [
+      "Read/Grep/Glob/WebSearch/WebFetch/Agent/Task",
+      "Bash: 查询类命令、常用编译测试命令（mvn/java/python/pip/pytest/javac/jsp 等）",
+      "Edit/Write: 单次任务首允后自动放行（关键配置除外）"
+    ],
+    "requireConfirmation": [
+      "Edit/Write: 关键配置（CI/CD、凭证、基础设施）",
+      "Bash: 删除/覆盖/推送/重置/安装卸载/修改系统配置",
+      "git commit: 禁止自动执行"
+    ]
+  },
+  "preferences": {
+    "planModeForComplexTasks": true,
+    "useTasksForMultiStepWork": true,
+    "confirmDestructiveActions": true,
+    "preferEditingOverCreating": true,
+    "avoidPrematureAbstraction": true,
+    "validateAtSystemBoundariesOnly": true,
+    "followExistingConventions": true,
+    "noUnrequestedFeatures": true
+  },
+  "_localConfigNote": "个人本地配置请放在 .claude.local/ 目录下，已被 .gitignore 忽略。"
+}

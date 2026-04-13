@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "user": {
+    "responseStyle": "concise"
+  },
+  "preferences": {
+    "autoCommit": false,
+    "autoPush": false,
+    "showDiffOnEdit": true
+  },
+  "rules": {
+    "autoLoad": [
+      "personal-preferences"
+    ]
+  }
+}
