@@ -32,6 +32,19 @@ Claude Code 会在每次对话开始时自动读取项目根目录的 `CLAUDE.md
 - **`.claude/rules/*.md`** = 服务区手册。只有在 Claude 实际执行某类任务时（如写代码、跑测试、执行命令），才按需读取对应的规则文件。
 - **`.claude.local/`** = 你的私人驾照备注。存放个人偏好，完全不影响团队共享的公共配置。
 
+### 适配其他 AI 编程工具
+
+本套规则同样适用于 Cursor、Codeium（Windsurf）、GitHub Copilot Chat 等支持上下文引用的 AI 工具：
+
+| 工具 | 引用方式 | 操作建议 |
+|------|----------|----------|
+| **Cursor** | 在 Chat / Composer 中输入 `@CLAUDE.md` 或 `@.claude/rules/code-style.md` | 每次新会话先 `@CLAUDE.md` 注入基线，任务中按需 `@` 具体规则 |
+| **Codeium / Windsurf** | 使用 Cascade 的 `#CLAUDE.md` 或 `#.claude/rules/testing.md` 引用 | 同 Cursor，先注入基线再按需引用 |
+| **GitHub Copilot Chat** | 通过 `#file:` 指令引用，如 `#file:CLAUDE.md` | 部分版本支持自动读取，不支持时手动粘贴到提示中 |
+| **通用方式** | 将 `CLAUDE.md` 内容复制到工具的 System Prompt / Custom Instructions 中 | 适合有固定配置入口的 IDE 插件或 API 调用 |
+
+**核心原则**：无论使用哪种工具，规则文件的内容都是纯 Markdown，不绑定任何 Claude Code 专有语法。只需将其作为上下文注入，即可获得一致的约束效果。
+
 ---
 
 ## 目录说明
