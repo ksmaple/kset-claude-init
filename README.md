@@ -69,8 +69,13 @@ Claude Code 会在每次对话开始时自动读取项目根目录的 `CLAUDE.md
 │   └── skills/                  # 自定义技能
 │       ├── fix-issue/
 │       │   └── SKILL.md         # 修复 Issue 技能
-│       └── git-commit/
-│           └── SKILL.md         # 生成提交信息技能
+│       ├── git-commit/
+│       │   └── SKILL.md         # 生成提交信息技能
+│       └── file-reader/
+│           ├── SKILL.md         # 多格式文件读取技能
+│           ├── file_reader.py   # Python 3.10+ 提取脚本
+│           ├── fallback_win.ps1 # Windows 无 Python 降级脚本
+│           └── fallback_unix.pl # Unix 无 Python 降级脚本
 └── .claude.local/               # 本地配置（已 gitignore）
     ├── rules/
     │   └── personal-preferences.md
@@ -173,6 +178,7 @@ CLAUDE.local.md
 - 编辑文件时首次确认后，后续同类操作自动放行
 - 提到"写测试"时，会主动引用 `.claude/rules/testing.md`
 - 提到"提交"时，会主动引用 `.claude/rules/git-commit.md`，并使用 `/git-commit` 生成提交信息
+- 提到"读取文件"、"解析 PDF/Excel" 时，会使用 `/file-reader` 提取结构化内容
 - 反复使用某个未文档化的模式时，会自动在 `.claude.local/rules/` 下生成为本地规则
 - 提到"命令"时，会优先使用 `rtk` 前缀（如果已安装 RTK）
 
