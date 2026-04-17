@@ -11,17 +11,27 @@
 - 交互语言为**中文**，技术术语可保留英文
 
 ## 权限规则
-- **自动放行**：Read/Grep/Glob/WebSearch/WebFetch/Agent/Task/查询类 Bash/常用编译测试命令（mvn/java/python/pip/pytest/javac/jsp 等）
+- **自动放行**：Read/Grep/Glob/WebSearch/WebFetch/Agent/Task/查询类 Bash/curl/常用编译测试命令（mvn/java/python/pip/pytest/javac/jsp 等）
 - **写操作**：单次任务首允后，后续同类 Edit/Write 自动放行；关键配置（CI/CD、凭证、基础设施）除外
 - **Git 限制**：禁止自动 `git commit`；push --force/reset --hard 等破坏性操作需确认
 - **需确认**：安装/卸载依赖、修改系统配置、对外可见操作（PR/评论/消息等）
+
+## 配置变更边界
+- **`CLAUDE.md` 和 `.claude/` 为通用规则目录**，存放团队共享的公共配置
+- **后续所有配置变更，默认优先在本地配置（`CLAUDE.local.md` 及 `.claude.local/`）中更新**
+- 只有当用户明确要求"修改通用规则"、"更新公共配置"或类似表述时，才修改 `CLAUDE.md` 或 `.claude/` 下的文件
 
 ## 本地配置引导
 **处理任务前先读取 `CLAUDE.local.md`。**
 
 ## 公共配置索引（按需模糊匹配）
-规则：`.claude/rules/code-style.md`、`.claude/rules/testing.md`、`.claude/rules/security.md`、`.claude/rules/cli-usage.md`、`.claude/rules/file-organization.md`  
+规则：`.claude/rules/code-style.md`、`.claude/rules/testing.md`、`.claude/rules/security.md`、`.claude/rules/cli-usage.md`、`.claude/rules/file-organization.md`、`.claude/rules/git-commit.md`、`.claude/rules/rule-evolution.md`  
 代理：`.claude/agents/code-reviewer.md`、`.claude/agents/debugger.md`  
-技能：`.claude/skills/fix-issue/SKILL.md`
+技能：`.claude/skills/fix-issue/SKILL.md`、`.claude/skills/git-commit/SKILL.md`
 
 **加载原则**：公共配置为基线，本地配置（`CLAUDE.local.md` 及 `.claude.local/`）补充并覆盖冲突项。同名配置**合并加载**，冲突时以本地为准。
+
+## 规则读取优化
+`.claude/rules/` 下的规则文件统一采用三段式结构：规则名称、规则摘要、规则具体内容。  
+**读取时优先查看"规则摘要"，只有摘要内容命中当前任务场景时，才继续读取"规则具体内容"。**  
+此机制用于减少无关规则对上下文的占用。
