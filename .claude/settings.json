@@ -13,10 +13,6 @@
     "code-reviewer": { "enabled": true },
     "debugger": { "enabled": true }
   },
-  "hooks": {
-    "beforeEdit": [],
-    "afterEdit": []
-  },
   "permissions": {
     "allow": [
       "Read/Grep/Glob/WebSearch/WebFetch/Agent/Task",
