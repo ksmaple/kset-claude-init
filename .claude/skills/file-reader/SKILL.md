@@ -109,3 +109,7 @@ txt、md、csv、json、xml、yaml、yml、html、htm、css、js、ts、jsx、ts
 ### 编码问题
 
 主脚本优先按 UTF-8 读取，失败时回退 GBK，再失败则使用 ISO-8859-1 并替换不可识别字符为 `�`，同时 `metadata.encoding` 会标注实际使用的编码。
+
+## 作者
+
+- 咔咔不太卡
