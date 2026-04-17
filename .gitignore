@@ -6,3 +6,6 @@ CLAUDE.local.md
 # 临时文件与缓存
 tmp/**
 !tmp/.gitkeep
+__pycache__/
+*.pyc
+*.pyo
