@@ -21,7 +21,11 @@
     "allow": [
       "Read/Grep/Glob/WebSearch/WebFetch/Agent/Task",
       "Bash: 查询类命令、常用编译测试命令（mvn/java/python/pip/pytest/javac/jsp 等）",
-      "Edit/Write: 单次任务首允后自动放行（关键配置除外）"
+      "Edit/Write: 单次任务首允后自动放行（关键配置除外）",
+      "Bash(*file_reader.py *)",
+      "Bash(pip install openpyxl*)",
+      "Bash(pip install python-docx*)",
+      "Bash(pip install pymupdf*)"
     ],
     "requireConfirmation": [
       "Edit/Write: 关键配置（CI/CD、凭证、基础设施）",

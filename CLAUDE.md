@@ -27,7 +27,7 @@
 ## 公共配置索引（按需模糊匹配）
 规则：`.claude/rules/code-style.md`、`.claude/rules/testing.md`、`.claude/rules/security.md`、`.claude/rules/cli-usage.md`、`.claude/rules/file-organization.md`、`.claude/rules/git-commit.md`、`.claude/rules/rule-evolution.md`  
 代理：`.claude/agents/code-reviewer.md`、`.claude/agents/debugger.md`  
-技能：`.claude/skills/fix-issue/SKILL.md`、`.claude/skills/git-commit/SKILL.md`
+技能：`.claude/skills/fix-issue/SKILL.md`、`.claude/skills/git-commit/SKILL.md`、`.claude/skills/file-reader/SKILL.md`
 
 **加载原则**：公共配置为基线，本地配置（`CLAUDE.local.md` 及 `.claude.local/`）补充并覆盖冲突项。同名配置**合并加载**，冲突时以本地为准。
 

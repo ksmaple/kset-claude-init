@@ -1,4 +1,8 @@
 # Claude Code 本地配置
-# CLAUDE.local.md
-# .claude.local/**
+CLAUDE.local.md
+.claude.local/**
 .claude/settings.local.json
+
+# 临时文件与缓存
+tmp/**
+!tmp/.gitkeep
