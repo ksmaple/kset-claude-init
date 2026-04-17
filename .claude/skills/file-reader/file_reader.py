@@ -117,6 +117,14 @@ class CacheManager:
 
 
 class FileExtractor:
+    BINARY_EXTS: frozenset[str] = frozenset({
+        ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".ico", ".svgz",
+        ".mp3", ".mp4", ".avi", ".mov", ".mkv", ".flv", ".wmv",
+        ".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz",
+        ".exe", ".dll", ".so", ".dylib", ".bin", ".o", ".obj",
+        ".doc", ".ppt", ".pptx", ".mdb",
+    })
+
     def __init__(self, max_size_mb: float = 2.0) -> None:
         self.max_size = int(max_size_mb * 1024 * 1024)
         self.cache = CacheManager()
@@ -126,10 +134,13 @@ class FileExtractor:
         path = Path(file_path)
 
         if not path.exists():
-            return self._error(path, start, "文件不存在")
+            return self._error(path, start, "文件不存在", suffix=suffix)
 
         size = path.stat().st_size
         suffix = path.suffix.lower()
+
+        if suffix in self.BINARY_EXTS:
+            return self._error(path, start, "不支持的二进制格式，无法提取文本内容", size=size, suffix=suffix)
 
         cached = self.cache.get(path)
         if cached is not None:
@@ -164,7 +175,7 @@ class FileExtractor:
             self.cache.set(path, asdict(result))
             return result
         except Exception as exc:
-            return self._error(path, start, str(exc))
+            return self._error(path, start, str(exc), size=size, suffix=suffix)
 
     @staticmethod
     def _file_hash(path: Path) -> str:
@@ -200,15 +211,15 @@ class FileExtractor:
         }
         return mapping.get(suffix, self._extract_text)
 
-    def _error(self, path: Path, start: float, msg: str) -> FileResult:
+    def _error(self, path: Path, start: float, msg: str, size: int = 0, suffix: str = "") -> FileResult:
         elapsed = int((time.perf_counter() - start) * 1000)
         return FileResult(
             path=str(path),
-            size=0,
+            size=size,
             estimated_time_ms=elapsed,
             content="",
             locations=[],
-            metadata={"type": "unknown"},
+            metadata={"type": suffix.lstrip(".") or "unknown"},
             error=msg,
             cached=False,
         )

@@ -10,6 +10,16 @@ my @TEXT_EXTS = qw(
     ps1 bat cmd vbs lua r pl sql
 );
 my %TEXT_MAP = map { $_ => 1 } @TEXT_EXTS;
+
+my @BINARY_EXTS = qw(
+    jpg jpeg png gif bmp webp ico svgz
+    mp3 mp4 avi mov mkv flv wmv
+    zip rar 7z tar gz bz2 xz
+    exe dll so dylib bin o obj
+    doc ppt pptx mdb
+);
+my %BINARY_MAP = map { $_ => 1 } @BINARY_EXTS;
+
 my $MAX_SIZE = 2 * 1024 * 1024;
 
 sub optimize_content {
@@ -55,6 +65,11 @@ for my $p (@ARGV) {
         $ext = lc($1);
     }
     my $size = -s $p || 0;
+
+    if ($BINARY_MAP{$ext}) {
+        push @all_output, make_result($p, $size, 0, 0, "", [], {type => $ext}, "不支持的二进制格式，无法提取文本内容");
+        next;
+    }
 
     if ($size > $MAX_SIZE) {
         my $mb = sprintf("%.2f", $size / (1024 * 1024));

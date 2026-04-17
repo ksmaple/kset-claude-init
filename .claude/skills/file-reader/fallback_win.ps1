@@ -11,6 +11,14 @@ $TextExts = @(
     "ps1","bat","cmd","vbs","lua","r","pl","sql"
 )
 
+$BinaryExts = @(
+    "jpg","jpeg","png","gif","bmp","webp","ico","svgz",
+    "mp3","mp4","avi","mov","mkv","flv","wmv",
+    "zip","rar","7z","tar","gz","bz2","xz",
+    "exe","dll","so","dylib","bin","o","obj",
+    "doc","ppt","pptx","mdb"
+)
+
 $MaxSize = 2MB
 
 function Optimize-Content([string]$Text) {
@@ -50,6 +58,11 @@ $allOutput = @()
 foreach ($p in $Paths) {
     $ext = [System.IO.Path]::GetExtension($p).TrimStart('.').ToLower()
     $size = if (Test-Path $p) { (Get-Item $p).Length } else { 0 }
+
+    if ($ext -in $BinaryExts) {
+        $allOutput += (Make-Result $p $size 0 0 "" @() @{type=$ext} "不支持的二进制格式，无法提取文本内容")
+        continue
+    }
 
     if ($size -gt $MaxSize) {
         $mb = [math]::Round($size/1MB,2)
