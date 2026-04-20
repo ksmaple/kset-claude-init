@@ -1,37 +1,46 @@
 # 项目级 Claude Code 指令
 
 ## 核心约束
-- 优先编辑现有文件，拒绝过度工程化（YAGNI），不添加未请求的功能
-- 遵循项目已有风格，不为一次性操作创建抽象，只在系统边界验证
-- 修改前阅读上下文，复杂任务进 Plan Mode，多步骤用 Task 跟踪
-- 破坏性操作（删除、强制推送、降级依赖等）需先确认
+- 优先编辑现有文件，拒绝过度工程化（YAGNI）
+- 遵循项目已有风格，只在系统边界验证
+- 复杂任务进 Plan Mode，多步骤用 Task 跟踪
+- 破坏性操作需先确认
 
 ## 编码与语言
 - 所有新建文件默认使用 **UTF-8** 编码
 - 交互语言为**中文**，技术术语可保留英文
 
-## 权限规则
-- **自动放行**：Read/Grep/Glob/WebSearch/WebFetch/Agent/Task/查询类 Bash/curl/常用编译测试命令（mvn/java/python/pip/pytest/javac/jsp 等）
-- **写操作**：单次任务首允后，后续同类 Edit/Write 自动放行；关键配置（CI/CD、凭证、基础设施）除外
-- **Git 限制**：禁止自动 `git commit`；push --force/reset --hard 等破坏性操作需确认
-- **需确认**：安装/卸载依赖、修改系统配置、对外可见操作（PR/评论/消息等）
+## 权限策略
+- 本仓库为配置项目，**权限完全开放**
+- 所有 Read/Edit/Write/Bash/Skill 操作均自动放行
+- 在其他项目使用本配置时，请收紧权限
 
 ## 配置变更边界
-- **`CLAUDE.md` 和 `.claude/` 为通用规则目录**，存放团队共享的公共配置
-- **后续所有配置变更，默认优先在本地配置（`CLAUDE.local.md` 及 `.claude.local/`）中更新**
-- 只有当用户明确要求"修改通用规则"、"更新公共配置"或类似表述时，才修改 `CLAUDE.md` 或 `.claude/` 下的文件
+- `CLAUDE.md` 和 `.claude/` 为**公共配置**，存放团队共享规则
+- **后续配置变更默认优先在本地配置**（`CLAUDE.local.md` 及 `.claude.local/`）中更新
+- 仅当用户明确要求"修改通用规则"、"更新公共配置"时，才修改公共配置
 
 ## 本地配置引导
-**处理任务前先读取 `CLAUDE.local.md`。**
+处理任务前先读取 `CLAUDE.local.md`。
 
-## 公共配置索引（按需模糊匹配）
-规则：`.claude/rules/code-style.md`、`.claude/rules/testing.md`、`.claude/rules/security.md`、`.claude/rules/cli-usage.md`、`.claude/rules/file-organization.md`、`.claude/rules/git-commit.md`、`.claude/rules/rule-evolution.md`  
-代理：`.claude/agents/code-reviewer.md`、`.claude/agents/debugger.md`  
-技能：`.claude/skills/fix-issue/SKILL.md`、`.claude/skills/git-commit/SKILL.md`、`.claude/skills/file-reader/SKILL.md`
+## 公共配置索引
 
-**加载原则**：公共配置为基线，本地配置（`CLAUDE.local.md` 及 `.claude.local/`）补充并覆盖冲突项。同名配置**合并加载**，冲突时以本地为准。
+| 规则 | 摘要 |
+|------|------|
+| `code-style` | 命名、格式、注释与修改纪律，拒绝过早抽象 |
+| `testing` | 新功能/Bug 修复需附测试，聚焦行为 |
+| `security` | 代码安全、依赖安全、密钥管理与泄露应急 |
+| `cli-usage` | 命令行优先 RTK，专用工具优先于 Bash |
+| `file-organization` | 临时文件统一放入 `tmp/` |
+| `git-commit` | 中文提交信息，携带类型前缀 |
+| `documentation-format` | 优先使用 Markdown |
+| `rule-evolution` | 反复出现的模式自动提炼为规则 |
+
+代理：`code-reviewer`、`debugger`  
+技能：`fix-issue`、`git-commit`、`file-reader`
+
+**加载原则**：公共配置为基线，本地配置补充并覆盖冲突项。
 
 ## 规则读取优化
-`.claude/rules/` 下的规则文件统一采用三段式结构：规则名称、规则摘要、规则具体内容。  
-**读取时优先查看"规则摘要"，只有摘要内容命中当前任务场景时，才继续读取"规则具体内容"。**  
-此机制用于减少无关规则对上下文的占用。
+`.claude/rules/` 下规则采用三段式结构（规则名称、规则摘要、规则具体内容）。
+**读取时优先查看"规则摘要"，命中场景后再读取具体内容。**
