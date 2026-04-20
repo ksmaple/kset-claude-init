@@ -3,10 +3,9 @@
   "rules": {
     "autoLoad": [
       "code-style",
-      "testing",
       "security",
       "cli-usage",
-      "file-organization"
+      "git-commit"
     ]
   },
   "agents": {
@@ -16,18 +15,54 @@
   "permissions": {
     "allow": [
       "Read/Grep/Glob/WebSearch/WebFetch/Agent/Task",
-      "Bash: 查询类命令、常用编译测试命令（mvn/java/python/pip/pytest/javac/jsp 等）",
-      "Edit/Write: 单次任务首允后自动放行（关键配置除外）",
-      "Bash(*file_reader.py *)",
-      "Bash(pip install openpyxl*)",
-      "Bash(pip install python-docx*)",
-      "Bash(pip install pymupdf*)"
+      "Edit/Write",
+      "Skill(update-config)",
+
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(find *)",
+      "Bash(echo *)",
+      "Bash(pwd)",
+      "Bash(whoami)",
+      "Bash(env)",
+      "Bash(printenv *)",
+      "Bash(where *)",
+      "Bash(command -v *)",
+      "Bash(dir *)",
+
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(rm *)",
+      "Bash(mkdir *)",
+      "Bash(rmdir *)",
+      "Bash(touch *)",
+
+      "Bash(git *)",
+
+      "Bash(pip *)",
+      "Bash(pip3 *)",
+      "Bash(npm *)",
+      "Bash(pnpm *)",
+      "Bash(yarn *)",
+      "Bash(node *)",
+      "Bash(npx *)",
+
+      "Bash(make *)",
+      "Bash(cargo *)",
+      "Bash(mvn *)",
+      "Bash(java *)",
+      "Bash(javac *)",
+      "Bash(gradle *)",
+      "Bash(pytest *)",
+      "Bash(jsp *)",
+
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(py *)",
+
+      "Bash(*file_reader.py *)"
     ],
-    "requireConfirmation": [
-      "Edit/Write: 关键配置（CI/CD、凭证、基础设施）",
-      "Bash: 删除/覆盖/推送/重置/安装卸载/修改系统配置",
-      "git commit: 禁止自动执行"
-    ]
+    "requireConfirmation": []
   },
   "preferences": {
     "planModeForComplexTasks": true,
@@ -39,5 +74,5 @@
     "followExistingConventions": true,
     "noUnrequestedFeatures": true
   },
-  "_localConfigNote": "个人本地配置请放在 .claude.local/ 目录下，已被 .gitignore 忽略。"
+  "_note": "本仓库为 Claude Code 配置项目，权限完全开放。requireConfirmation 置空。"
 }

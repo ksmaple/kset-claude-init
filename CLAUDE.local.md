@@ -6,9 +6,9 @@
 - 关键改动后说明影响范围
 
 ## 本地配置索引
-- `.claude.local/rules/personal-preferences.md`
-- `.claude.local/agents/tech-lead.md`
-- `.claude.local/skills/quick-commit/SKILL.md`
+- `.claude.local/rules/**.md`
+- `.claude.local/agents/**.md`
+- `.claude.local/skills/**/SKILL.md`
 
 ## 配置变更边界
 - **`CLAUDE.local.md` 和 `.claude.local/` 为本地个人配置目录**
